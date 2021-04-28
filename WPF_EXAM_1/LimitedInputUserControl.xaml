@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WPF_EXAM_1.LimitedInputUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_EXAM_1"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:LabelConverter x:Key="lblConverter"/>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal">
+        <Label Width="100" Margin="10"
+               Content="{Binding Title}"></Label>
+        <Slider IsSnapToTickEnabled="True" Width="400" Margin="10"
+                Minimum="{Binding StartValue}" Maximum="{Binding MaximumValue}" Name="slider"
+                Value="{Binding Value, UpdateSourceTrigger=PropertyChanged}"></Slider>
+        <Label Width="80" Margin="10" Name="curNumber"  Content="{Binding ElementName=slider, Path=Value}"></Label>
+        <Label Width="100" Margin="10">
+            <Label.Content>
+                <MultiBinding  Converter="{StaticResource lblConverter}" >
+                    <Binding ElementName="slider" Path="Value"/>
+                    <Binding ElementName="slider" Path="Maximum"/>
+                    <Binding ElementName="slider" Path="Minimum"/>
+                </MultiBinding>
+            </Label.Content>
+        </Label>
+
+    </StackPanel>
+
+</UserControl>

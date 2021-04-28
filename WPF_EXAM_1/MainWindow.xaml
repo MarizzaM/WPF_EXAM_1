@@ -1,0 +1,50 @@
+﻿<Window x:Class="WPF_EXAM_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_EXAM_1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:LimitedInputUserControl x:Key="window"/>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0"  Margin="100 0">
+            <TextBlock Margin="20 0" Text="Text" />
+            <TextBox Name="txt" Text="I love WPF" Margin="20 0" Width="162"></TextBox>
+        </StackPanel>
+        <local:LimitedInputUserControl
+            Title="Width"
+            x:Name="c1"
+            StartValue="110"
+            Height="50"
+            Grid.Row="1"
+          MaximumValue="400"
+            Value="110"
+
+
+            />
+        <local:LimitedInputUserControl
+            Title="Heght"
+            x:Name="c2"
+            StartValue="29"
+            Height="50"
+            Grid.Row="2"
+            MaximumValue="100"
+            Value="29"
+  />
+        <Button Grid.Row="3" HorizontalAlignment="Center"
+                Width="{Binding ElementName=c1, Path=Value}" 
+                Height="{Binding ElementName=c2, Path=Value}" 
+                Content="{Binding ElementName=txt, Path=Text}" Command="{Binding MyDelegate, Source={StaticResource window}}"></Button>
+    </Grid>
+</Window>
