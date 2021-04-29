@@ -20,16 +20,12 @@ namespace WPF_EXAM_1
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private MainWindowViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            this.vm = new MainWindowViewModel();
+            this.DataContext = this.vm;
         }
     }
 }

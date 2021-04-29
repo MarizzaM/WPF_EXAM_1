@@ -15,16 +15,14 @@ using System.Windows.Shapes;
 namespace WPF_EXAM_1
 {
     /// <summary>
-    /// Interaction logic for DescriptionWindow.xaml
+    /// Interaction logic for InfoWindow.xaml
     /// </summary>
-    public partial class DescriptionWindow : Window
+    public partial class InfoWindow : Window
     {
-        private MainWindow mw;
-        public DescriptionWindow(MainWindow mw)
+        public InfoWindow(MainWindowViewModel viewModel)
         {
-           
             InitializeComponent();
-            this.DataContext = mw;
+            this.DataContext = viewModel;
         }
     }
 }

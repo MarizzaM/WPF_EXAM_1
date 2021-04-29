@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-        <local:LimitedInputUserControl x:Key="window"/>
+        <local:LabelConverter x:Key="lblConverter"/>
     </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -20,31 +20,48 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="0"  Margin="100 0">
             <TextBlock Margin="20 0" Text="Text" />
-            <TextBox Name="txt" Text="I love WPF" Margin="20 0" Width="162"></TextBox>
+            <TextBox Name="txt" Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20 0" Width="162"></TextBox>
         </StackPanel>
-        <local:LimitedInputUserControl
-            Title="Width"
-            x:Name="c1"
-            StartValue="110"
-            Height="50"
-            Grid.Row="1"
-          MaximumValue="400"
-            Value="110"
 
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="50">
+            <Label Width="100" Margin="10"
+               Content="Width"></Label>
+            <Slider IsSnapToTickEnabled="True" Width="400" Margin="10"
+                    Minimum="{Binding StartWidthValue}" Maximum="400" Name="c1"
+                    Value="{Binding WidthValue, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            <Label Width="80" Margin="10" Name="curNumber"  Content="{Binding ElementName=c1, Path=Value}"></Label>
+            <Label Width="100" Margin="10">
+                <Label.Content>
+                    <MultiBinding  Converter="{StaticResource lblConverter}" >
+                        <Binding ElementName="c1" Path="Value"/>
+                        <Binding ElementName="c1" Path="Maximum"/>
+                        <Binding ElementName="c1" Path="Minimum"/>
+                    </MultiBinding>
+                </Label.Content>
+            </Label>
+        </StackPanel>
 
-            />
-        <local:LimitedInputUserControl
-            Title="Heght"
-            x:Name="c2"
-            StartValue="29"
-            Height="50"
-            Grid.Row="2"
-            MaximumValue="100"
-            Value="29"
-  />
-        <Button Grid.Row="3" HorizontalAlignment="Center"
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Height="50">
+            <Label Width="100" Margin="10"
+               Content="Height"></Label>
+            <Slider IsSnapToTickEnabled="True" Width="400" Margin="10"
+                    Minimum="{Binding StartHeightValue}" Maximum="100" Name="c2"
+                    Value="{Binding HeightValue, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            <Label Width="80" Margin="10" Content="{Binding ElementName=c2, Path=Value}"></Label>
+            <Label Width="100" Margin="10">
+                <Label.Content>
+                    <MultiBinding  Converter="{StaticResource lblConverter}" >
+                        <Binding ElementName="c2" Path="Value"/>
+                        <Binding ElementName="c2" Path="Maximum"/>
+                        <Binding ElementName="c2" Path="Minimum"/>
+                    </MultiBinding>
+                </Label.Content>
+            </Label>
+        </StackPanel>
+
+        <Button Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Width="{Binding ElementName=c1, Path=Value}" 
                 Height="{Binding ElementName=c2, Path=Value}" 
-                Content="{Binding ElementName=txt, Path=Text}" Command="{Binding MyDelegate, Source={StaticResource window}}"></Button>
+                Content="{Binding ElementName=txt, Path=Text}" Command="{Binding MyDelegate}" ></Button>
     </Grid>
 </Window>
